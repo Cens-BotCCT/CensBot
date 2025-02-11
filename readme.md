@@ -1,7 +1,7 @@
 # Sistema de Gestión de PQRS - CENS
 
 ## Descripción
-Automatización realizad en P
+Automatización realizad en Python con selenium integrando la api de GPT 4o de Azure OpenAI
 
 ## Características Principales
 - Automatización del proceso de login, consulta y descarga de radicados en la plataforma Mercurio

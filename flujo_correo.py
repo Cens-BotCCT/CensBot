@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# Función para manejar el flujo de correo electrónico
 def flujo_correo(driver, ventana_main):
     """
     Maneja el flujo de correo electrónico en la plataforma Mercurio.

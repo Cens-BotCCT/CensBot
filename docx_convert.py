@@ -1,3 +1,7 @@
+#  Este script procesa un archivo .eml adjunto en un ZIP descargado,
+#  extrae el texto y adjuntos (PDF y DOCX), y genera una respuesta
+#  en formato JSON para dos cartas de respuesta. Las cartas se generan
+#  en formato DOCX y se guardan en el directorio de trabajo.
 
 import os
 import re
@@ -21,6 +25,7 @@ from rad_utils import numero_radicado_global
 # FUNCIONES COMUNES
 ##########################
 
+# Función para decodificar strings con caracteres especiales
 def decode_str(string):
     """
     Decodifica strings que pueden contener caracteres especiales o estar codificados
@@ -39,6 +44,7 @@ def decode_str(string):
                 result += str(decoded_string)
     return result
 
+# Función para extraer texto de un archivo PDF
 def extract_text_from_pdf(pdf_path):
     """
     Extrae el texto de un archivo PDF.
@@ -53,6 +59,7 @@ def extract_text_from_pdf(pdf_path):
     except Exception as e:
         return f"Error al procesar PDF: {str(e)}"
 
+# Función para extraer texto de un archivo DOCX
 def extract_text_from_docx(docx_path):
     """
     Extrae el texto de un archivo DOCX.
@@ -66,6 +73,7 @@ def extract_text_from_docx(docx_path):
     except Exception as e:
         return f"Error al procesar DOCX: {str(e)}"
 
+# Función para agregar párrafos a un documento Word
 def add_letter_paragraphs(doc, text):
     """
     Evita párrafos vacíos extra: sustituye múltiples saltos de línea por uno solo,
@@ -81,6 +89,7 @@ def add_letter_paragraphs(doc, text):
 # FUNCIONES PARA PROCESAR EL .eml
 ##########################
 
+# Buscar el último archivo ZIP en la carpeta de descargas y moverlo a una subcarpeta
 def get_latest_zip(downloads_path):
     """
     Busca el último archivo ZIP descargado en la carpeta 'downloads_path' y lo mueve
@@ -109,6 +118,7 @@ def get_latest_zip(downloads_path):
     
     return max(zip_files_in_zip_dir, key=os.path.getmtime)
 
+# Extraer el primer archivo .eml encontrado en el ZIP y lo coloca en un directorio temporal.
 def extract_eml(zip_path):
     """
     Extrae el primer archivo .eml encontrado en el ZIP y lo coloca en un directorio temporal.
@@ -123,9 +133,10 @@ def extract_eml(zip_path):
         zip_ref.extract(eml_files[0], temp_dir)
         return os.path.join(temp_dir, eml_files[0])
 
+# Función principal para parsear el .eml
 def parse_eml_with_attachments(eml_path):
     """
-    Parsea el archivo .eml con BytesParser y extrae:
+    Esta funcion parsea el archivo .eml con BytesParser y extrae:
       - Encabezados (from, to, subject, date)
       - Cuerpo principal (text/plain)
       - Contenido de adjuntos PDF y DOCX
@@ -224,7 +235,8 @@ def process_main():
     # Configuración de logging básico
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger("IntegratedProcess")
-    
+
+    # Ruta de descargas
     downloads_path = os.path.expanduser("~/Downloads")
     
     try:

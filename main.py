@@ -1,4 +1,6 @@
-# main.py
+# Script principal que ejecuta el flujo de trabajo para la automatización
+# de la plataforma Mercurio.
+
 import sys
 import re
 import os
@@ -19,6 +21,8 @@ from flujo_correo import flujo_correo
 from docx_convert import process_main
 from rad_utils import get_rad_number, numero_radicado_global
 
+
+# Función principal del script
 def main():
     service = Service("C:/Users/SBURGOSP/EdgeDriver/edgedriver_win64/msedgedriver.exe")
     edge_options = Options()

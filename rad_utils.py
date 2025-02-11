@@ -1,10 +1,12 @@
-# En rad_utils.py
+# Módulo con funciones de utilidad para el proyecto de RAD
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 numero_radicado_global = None  # Inicializamos la variable global
 
+ # Función para obtener el número de radicado
 def get_rad_number(driver, timeout=10):
     global numero_radicado_global  # Declaramos que usaremos la variable global
     try:
